@@ -57,11 +57,11 @@ public:
      */
     GameStatus getGameStatus() const;
 
-    //TODO: complete the Mtmchkin class.
-
 private:
-    //TODO: complete the Mtmchkin class.
-
+    Player m_player;
+    const Card* m_deck;
+    int m_deckSize;
+    int m_currentCardIndex;
 };
 
 
