@@ -1,6 +1,7 @@
 
 
 #include "Player.h"
+#include "utilities.h"
 #include <iostream>
 
 Player::Player (const char *name, int max_hp, int force) : m_coins(0), m_level(1)
@@ -69,6 +70,11 @@ int Player::getAttackStrength () const
 {
     int total = m_level + m_force;
     return total;
+}
+
+void Player::printInfo () const
+{
+    printPlayerInfo(m_name,m_level,m_force,m_HP,m_coins);
 }
 //int main ()
 //{

@@ -25,6 +25,8 @@ public:
 
     ~Player () = default;
 
+    Player& operator=(const Player& other) = default;
+
     int getLevel () const;
 
     void levelUp ();
@@ -42,6 +44,8 @@ public:
     bool pay(int payment = 0);
 
     int  getAttackStrength() const;
+
+    void printInfo() const;
 
 };
 
