@@ -1,13 +1,9 @@
 
-
-
 #ifndef EX2_PLAYER_H
 #define EX2_PLAYER_H
 
-#include <string>
-
-#define DEFAULT_MAX_HP 100
-#define DEFAULT_FORCE 5
+const int DEFAULT_MAX_HP = 100;
+const int DEFAULT_FORCE = 5;
 
 class Player
 {
@@ -19,7 +15,7 @@ class Player
     int m_coins;
 
 public:
-    Player (const char *name, int max_hp = DEFAULT_MAX_HP, int force = DEFAULT_FORCE);
+    Player (const char *name, int maxHp = DEFAULT_MAX_HP, int force = DEFAULT_FORCE);
 
     Player (const Player &) = default;
 
@@ -31,11 +27,11 @@ public:
 
     void levelUp ();
 
-    void buff (int buff_level = 0);
+    void buff (int buffLevel = 0);
 
-    void heal (int heal_level = 0);
+    void heal (int healLevel = 0);
 
-    void damage(int dmg=0);
+    void damage(int hpLost=0);
 
     bool isKnockedOut() const;
 

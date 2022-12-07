@@ -69,12 +69,14 @@ void encounterTreasure(Player &player, const CardStats &stats)
 
 /* "Card" methods */
 
-Card::Card(CardType type, const CardStats &stats) {
+Card::Card(CardType type, const CardStats &stats)
+{
     this->m_effect = type;
     this->m_stats = stats;
 }
 
-void Card::applyEncounter(Player &player) const {
+void Card::applyEncounter(Player &player) const
+{
     switch (this->m_effect) {
         case CardType::Battle:
             encounterBattle(player, this->m_stats);
@@ -91,7 +93,8 @@ void Card::applyEncounter(Player &player) const {
     }
 }
 
-void Card::printInfo() const {
+void Card::printInfo() const
+{
     switch (this->m_effect) {
         case CardType::Battle:
             printBattleCardInfo(this->m_stats);

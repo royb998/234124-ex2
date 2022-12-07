@@ -3,20 +3,36 @@
 #include "Player.h"
 #include "utilities.h"
 
-Player::Player (const char *name, int max_hp, int force) : m_level(1), m_coins(0)
+Player::Player(const char *name, int maxHp, int force) : m_level(1), m_coins(0)
 {
     m_name = name;
-    m_maxHP = max_hp;
-    m_force = force;
-    m_HP = max_hp;
+
+    if (maxHp <= 0)
+    {
+        m_maxHP = DEFAULT_MAX_HP;
+    }
+    else
+    {
+        m_maxHP = maxHp;
+    }
+    m_HP = maxHp;
+
+    if (force <= 0)
+    {
+        m_force = DEFAULT_FORCE;
+    }
+    else
+    {
+        m_force = force;
+    }
 }
 
-int Player::getLevel () const
+int Player::getLevel() const
 {
     return m_level;
 }
 
-void Player::levelUp ()
+void Player::levelUp()
 {
     if (m_level < 10)
     {
@@ -24,46 +40,71 @@ void Player::levelUp ()
     }
 }
 
-void Player::buff (int buff_level)
+void Player::buff(int buffLevel)
 {
-    m_force += buff_level;
+    if (buffLevel > 0)
+    {
+        m_force += buffLevel;
+    }
 }
 
-void Player::heal (int heal_level)
+void Player::heal(int healLevel)
 {
-    if (m_HP + heal_level > m_maxHP)
+    /* Can't heal by a negative amount. */
+    if (healLevel < 0)
+    {
+        return;
+    }
+
+    if (m_HP + healLevel > m_maxHP)
     {
         m_HP = m_maxHP;
     }
     else
     {
-        m_HP += heal_level;
+        m_HP += healLevel;
     }
 }
 
-void Player::damage (int dmg)
+void Player::damage(int hpLost)
 {
-    if (dmg > m_HP)
+    /* Can't take negative damage. */
+    if (hpLost < 0)
+    {
+        return;
+    }
+
+    if (hpLost > m_HP)
     {
         m_HP = 0;
     } else
     {
-        m_HP -= dmg;
+        m_HP -= hpLost;
     }
 }
 
-bool Player::isKnockedOut () const
+bool Player::isKnockedOut() const
 {
     return m_HP == 0;
 }
 
-void Player::addCoins (int money)
+void Player::addCoins(int money)
 {
-    m_coins += money;
+    /* Can't gain negative money. */
+    if (money > 0)
+    {
+        m_coins += money;
+    }
 }
 
-bool Player::pay (int payment)
+bool Player::pay(int payment)
 {
+    /* Can't pay a negative price. */
+    if (payment < 0)
+    {
+        return true;
+    }
+
     if (m_coins < payment)
     {
         return false;
@@ -72,13 +113,13 @@ bool Player::pay (int payment)
     return true;
 }
 
-int Player::getAttackStrength () const
+int Player::getAttackStrength() const
 {
     int total = m_level + m_force;
     return total;
 }
 
-void Player::printInfo () const
+void Player::printInfo() const
 {
     printPlayerInfo(m_name,m_level,m_force,m_HP,m_coins);
 }
