@@ -2,9 +2,8 @@
 
 #include "Player.h"
 #include "utilities.h"
-#include <iostream>
 
-Player::Player (const char *name, int max_hp, int force) : m_coins(0), m_level(1)
+Player::Player (const char *name, int max_hp, int force) : m_level(1), m_coins(0)
 {
     m_name = name;
     m_maxHP = max_hp;
@@ -32,7 +31,14 @@ void Player::buff (int buff_level)
 
 void Player::heal (int heal_level)
 {
-    m_HP += heal_level;
+    if (m_HP + heal_level > m_maxHP)
+    {
+        m_HP = m_maxHP;
+    }
+    else
+    {
+        m_HP += heal_level;
+    }
 }
 
 void Player::damage (int dmg)
@@ -76,14 +82,3 @@ void Player::printInfo () const
 {
     printPlayerInfo(m_name,m_level,m_force,m_HP,m_coins);
 }
-//int main ()
-//{
-//    Player player1("efrat", 150, 2);
-//    player1.levelUp();
-//    int x = player1.getLevel();
-//    player1.buff(10);
-//    player1.damage(200);
-//    bool y = player1.isKnockedOut();
-//    int a = 5;
-//    return 0;
-//}

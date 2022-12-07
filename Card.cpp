@@ -14,7 +14,9 @@
  * */
 void encounterBattle(Player &player, const CardStats &stats)
 {
-    if (player.getAttackStrength() >= stats.force)
+    bool win = player.getAttackStrength() >= stats.force;
+
+    if (win)
     {
         player.levelUp();
         player.addCoins(stats.loot);
@@ -23,6 +25,7 @@ void encounterBattle(Player &player, const CardStats &stats)
     {
         player.damage(stats.hpLossOnDefeat);
     }
+    printBattleResult(win);
 }
 
 /**
