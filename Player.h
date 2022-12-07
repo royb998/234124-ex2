@@ -4,6 +4,7 @@
 
 const int DEFAULT_MAX_HP = 100;
 const int DEFAULT_FORCE = 5;
+const int MAX_LEVEL = 10;
 
 class Player
 {

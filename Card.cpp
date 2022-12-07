@@ -25,6 +25,7 @@ void encounterBattle(Player &player, const CardStats &stats)
     {
         player.damage(stats.hpLossOnDefeat);
     }
+
     printBattleResult(win);
 }
 
@@ -110,4 +111,3 @@ void Card::printInfo() const
             break;
     }
 }
-

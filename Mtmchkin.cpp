@@ -13,8 +13,7 @@ Mtmchkin::Mtmchkin(const char* playerName, const Card* cardsArray, int numOfCard
 }
 
 GameStatus Mtmchkin::getGameStatus() const {
-    /* TODO: Some const instead of 10 maybe. */
-    if (this->m_player.getLevel() == 10)
+    if (this->m_player.getLevel() == MAX_LEVEL)
     {
         return GameStatus::Win;
     }
@@ -29,6 +28,12 @@ GameStatus Mtmchkin::getGameStatus() const {
 }
 
 void Mtmchkin::playNextCard() {
+    /* Don't pull a card from an empty deck. */
+    if (this->m_deckSize == 0)
+    {
+        return;
+    }
+
     Card currentCard = this->m_deck[this->m_currentCardIndex];
     this->m_currentCardIndex = (this->m_currentCardIndex + 1) % this->m_deckSize;
     currentCard.printInfo();

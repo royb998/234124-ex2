@@ -5,7 +5,6 @@
 #ifndef EX2_GAME_H
 #define EX2_GAME_H
 #include "Card.h"
-#include <iostream>
 
 /*
  * GameStatus:
@@ -28,6 +27,7 @@ public:
      *      An instance of Mtmchkin
     */
     Mtmchkin(const char* playerName, const Card* cardsArray, int numOfCards);
+    ~Mtmchkin() = default;
 
 
     /*

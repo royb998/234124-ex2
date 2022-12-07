@@ -34,7 +34,7 @@ int Player::getLevel() const
 
 void Player::levelUp()
 {
-    if (m_level < 10)
+    if (m_level < MAX_LEVEL)
     {
         m_level++;
     }
@@ -51,35 +51,28 @@ void Player::buff(int buffLevel)
 void Player::heal(int healLevel)
 {
     /* Can't heal by a negative amount. */
-    if (healLevel < 0)
-    {
-        return;
-    }
-
-    if (m_HP + healLevel > m_maxHP)
-    {
-        m_HP = m_maxHP;
-    }
-    else
+    if (healLevel > 0)
     {
         m_HP += healLevel;
+    }
+
+    if (m_HP > m_maxHP)
+    {
+        m_HP = m_maxHP;
     }
 }
 
 void Player::damage(int hpLost)
 {
     /* Can't take negative damage. */
-    if (hpLost < 0)
-    {
-        return;
-    }
-
-    if (hpLost > m_HP)
-    {
-        m_HP = 0;
-    } else
+    if (hpLost > 0)
     {
         m_HP -= hpLost;
+    }
+
+    if (m_HP < 0)
+    {
+        m_HP = 0;
     }
 }
 
@@ -109,14 +102,14 @@ bool Player::pay(int payment)
     {
         return false;
     }
+
     m_coins -= payment;
     return true;
 }
 
 int Player::getAttackStrength() const
 {
-    int total = m_level + m_force;
-    return total;
+    return m_level + m_force;
 }
 
 void Player::printInfo() const
