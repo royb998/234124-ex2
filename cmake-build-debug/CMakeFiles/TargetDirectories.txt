@@ -1,3 +1,0 @@
-D:/Technion/Semester 1 CS/Mtam/Homework/Ex2/234124__ex2/234124-ex2/cmake-build-debug/CMakeFiles/234124_ex2.dir
-D:/Technion/Semester 1 CS/Mtam/Homework/Ex2/234124__ex2/234124-ex2/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Technion/Semester 1 CS/Mtam/Homework/Ex2/234124__ex2/234124-ex2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
