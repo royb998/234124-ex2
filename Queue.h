@@ -1,6 +1,7 @@
 #ifndef EX3_QUEUE_H
 #define EX3_QUEUE_H
 
+#include <cassert>
 #include <exception>
 #include "Node.h"
 
@@ -15,21 +16,33 @@ public:
     };
 
     Queue();
-
     ~Queue();
-
     Queue(const Queue &q);
 
     void pushBack(const T &x);
-
     T &front();
-
     const T &front() const;
-
     void popFront();
 
     int size();
+
+    class Iterator;
+    Iterator begin() const;
+    Iterator end() const;
 };
+
+template<class T>
+typename Queue<T>::Iterator Queue<T>::begin() const
+{
+    return Iterator(this->first);
+}
+
+template<class T>
+typename Queue<T>::Iterator Queue<T>::end() const
+{
+    assert(this->last != nullptr);
+    return Iterator(this->last->next);
+}
 
 template<class T>
 Queue<T>::Queue():size_(0), first(NULL), last(NULL)
@@ -142,6 +155,53 @@ template<class T>
 int Queue<T>::size()
 {
     return size_;
+}
+
+template<class T>
+class Queue<T>::Iterator
+{
+private:
+    queueNode<T>* m_current;
+
+    Iterator(queueNode<T>* const& node);
+
+    friend class Queue<T>;
+
+public:
+    const T& operator*() const;
+
+    Iterator& operator++();
+
+    bool operator!=(const Iterator& other);
+
+    Iterator(const Iterator&) = default;
+
+    Iterator& operator=(const Iterator&) = default;
+};
+
+template<class T>
+Queue<T>::Iterator::Iterator(queueNode<T>* const& node) :
+    m_current(node)
+{}
+
+template<class T>
+const T& Queue<T>::Iterator::operator*() const
+{
+    assert(this->m_current != nullptr);
+    return this->m_current->data;
+}
+
+template<class T>
+typename Queue<T>::Iterator& Queue<T>::Iterator::operator++()
+{
+    this->m_current = this->m_current->next;
+    return *this;
+}
+
+template<class T>
+bool Queue<T>::Iterator::operator!=(const Iterator& other)
+{
+    return this->m_current != other.m_current;
 }
 
 #endif //EX3_QUEUE_H
