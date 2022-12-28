@@ -185,7 +185,7 @@ T &Queue<T>::front() const
 template<class T>
 void Queue<T>::popFront()
 {
-    if (m_size <= 0)
+    if (m_size == 0)
     {
         throw EmptyQueue();
     }
