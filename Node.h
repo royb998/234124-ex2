@@ -19,12 +19,12 @@ struct queueNode
         next = NULL;
     }
 
-    queueNode(const queueNode &n)
+    queueNode(const queueNode &n) : next(NULL)
     {
         data = n.data;
     }
 
-    explicit queueNode(const queueNode *n)
+    explicit queueNode(const queueNode *n) : next(NULL)
     {
         data = n->data;
     }
