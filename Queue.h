@@ -1,35 +1,8 @@
 #ifndef EX3_QUEUE_H
 #define EX3_QUEUE_H
 
-#include <stdio.h>
 #include <exception>
-
-template<class T>
-struct queueNode
-{
-    T data;
-    queueNode *next;
-
-    explicit queueNode(const T &x)
-    {
-        data = x;
-        next = NULL;
-    }
-
-    queueNode(const queueNode &n)
-    {
-        data = n.data;
-    }
-
-    explicit queueNode(const queueNode *n)
-    {
-        data = n->data;
-    }
-
-    queueNode &operator=(const queueNode<T> &) = default;
-
-    ~queueNode() = default;
-};
+#include "Node.h"
 
 template<class T>
 class Queue
