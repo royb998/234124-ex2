@@ -8,10 +8,12 @@
 template<class T>
 class Queue
 {
-    queueNode<T> *first, *last;
-    int size_;
+    queueNode<T> *m_first;
+    queueNode<T> *m_last;
+    int m_size;
+
 public:
-    class empty
+    class Empty
     {
     };
 
@@ -34,24 +36,24 @@ public:
 template<class T>
 typename Queue<T>::Iterator Queue<T>::begin() const
 {
-    return Iterator(this->first);
+    return Iterator(this->m_first);
 }
 
 template<class T>
 typename Queue<T>::Iterator Queue<T>::end() const
 {
-    assert(this->last != nullptr);
-    return Iterator(this->last->next);
+    assert(this->m_last != nullptr);
+    return Iterator(this->m_last->next);
 }
 
 template<class T>
-Queue<T>::Queue():size_(0), first(NULL), last(NULL)
+Queue<T>::Queue():m_size(0), m_first(NULL), m_last(NULL)
 {}
 
 template<class T>
 Queue<T>::~Queue()
 {
-    queueNode<T> *n = first;
+    queueNode<T> *n = m_first;
     while (n)
     {
         queueNode<T> *tmp = n;
@@ -61,19 +63,19 @@ Queue<T>::~Queue()
 }
 
 template<class T>
-Queue<T>::Queue(const Queue &q):first(NULL), last(NULL), size_(q.size_)
+Queue<T>::Queue(const Queue &q):m_first(NULL), m_last(NULL), m_size(q.m_size)
 {
     try
     {
-        first = new queueNode<T>(q.first);
+        m_first = new queueNode<T>(q.m_first);
         if (q.size == 1)
         {
-            last = first;
+            m_last = m_first;
             return;
         }
 
-        queueNode<T> *current = first;
-        queueNode<T> *q_current = q.first;
+        queueNode<T> *current = m_first;
+        queueNode<T> *q_current = q.m_first;
         while (q_current->next)
         {
             current->next = new queueNode<T>(q_current->next);
@@ -82,7 +84,7 @@ Queue<T>::Queue(const Queue &q):first(NULL), last(NULL), size_(q.size_)
             q_current = q_current->next;
         }
 
-        last = current;
+        m_last = current;
     } catch (...)
     {
         delete this;
@@ -92,69 +94,69 @@ Queue<T>::Queue(const Queue &q):first(NULL), last(NULL), size_(q.size_)
 template<class T>
 void Queue<T>::pushBack(const T &x)
 {
-    if (size_ == 0)
+    if (m_size == 0)
     {
-        first = new queueNode<T>(x);
-        last = first;
-        size_++;
+        m_first = new queueNode<T>(x);
+        m_last = m_first;
+        m_size++;
 
         return;
     }
 
-    last->next = new queueNode<T>(x);
-    last = last->next;
-    size_++;
+    m_last->next = new queueNode<T>(x);
+    m_last = m_last->next;
+    m_size++;
 }
 
 template<class T>
 T &Queue<T>::front()
 {
-    if (size_ == 0)
+    if (m_size == 0)
     {
-        throw empty();
+        throw Empty();
     }
 
-    return first->data;
+    return m_first->data;
 }
 
 template<class T>
 const T &Queue<T>::front() const
 {
-    if (size_ == 0)
+    if (m_size == 0)
     {
-        throw empty();
+        throw Empty();
     }
 
-    return first->data;
+    return m_first->data;
 }
 
 template<class T>
 void Queue<T>::popFront()
 {
-    if (size_ == 0)
+    if (m_size == 0)
     {
-        throw empty();
+        throw Empty();
     }
 
-    if (size_ == 1)
+    if (m_size == 1)
     {
-        delete first;
-        first = NULL;
-        last = NULL;
+        delete m_first;
+        m_first = NULL;
+        m_last = NULL;
 
         return;
     }
 
-    queueNode<T> *second = first->next;
-    delete first;
+    queueNode<T> *second = m_first->next;
+    delete m_first;
 
-    first = second;
+    m_first = second;
 }
 
 template<class T>
 int Queue<T>::size()
 {
-    return size_;
+    return m_size;
 }
 
 template<class T>
