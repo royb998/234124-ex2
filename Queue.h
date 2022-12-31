@@ -2,15 +2,16 @@
 #define EX3_QUEUE_H
 
 #include <exception>
-#include "Node.h"
 
 /* ---------- Classes ---------- */
 
 template<class T>
 class Queue
 {
-    queueNode<T> *m_first;
-    queueNode<T> *m_last;
+    struct Node;
+
+    Node *m_first;
+    Node *m_last;
     int m_size;
 
 public:
@@ -38,12 +39,27 @@ public:
 };
 
 template<class T>
+struct Queue<T>::Node
+{
+    T data;
+    Node *next;
+
+    explicit Node(const T &x);
+    Node(const Node &n);
+    explicit Node(const Node *n);
+
+    Node &operator=(const Node&) = default;
+
+    ~Node() = default;
+};
+
+template<class T>
 class Queue<T>::Iterator
 {
 private:
-    queueNode<T>* m_current;
+    Node* m_current;
 
-    explicit Iterator(queueNode<T>* const& node);
+    explicit Iterator(Node* const& node);
 
     friend class Queue<T>;
 
@@ -62,9 +78,9 @@ template<class T>
 class Queue<T>::ConstIterator
 {
 private:
-    queueNode<T>* m_current;
+    Node* m_current;
 
-    explicit ConstIterator(queueNode<T>* const& node);
+    explicit ConstIterator(Node* const& node);
 
     friend class Queue<T>;
 
@@ -107,6 +123,27 @@ void transform(Queue<T>& queue, void (* map)(T&))
     }
 }
 
+/* ---------- Node Implementation ---------- */
+
+template <class T>
+Queue<T>::Node::Node(const T &x)
+{
+    data = x;
+    next = NULL;
+}
+
+template <class T>
+Queue<T>::Node::Node(const Node &n) : next(NULL)
+{
+    data = n.data;
+}
+
+template <class T>
+Queue<T>::Node::Node(const Node *n) : next(NULL)
+{
+    data = n->data;
+}
+
 /* ---------- Queue Implementation ---------- */
 
 template<class T>
@@ -116,10 +153,10 @@ Queue<T>::Queue():m_size(0), m_first(NULL), m_last(NULL)
 template<class T>
 Queue<T>::~Queue()
 {
-    queueNode<T> *n = m_first;
+    Node *n = m_first;
     while (n != NULL)
     {
-        queueNode<T> *tmp = n;
+        Node *tmp = n;
         n = n->next;
         delete tmp;
     }
@@ -130,18 +167,18 @@ Queue<T>::Queue(const Queue &q):m_first(NULL), m_last(NULL), m_size(q.m_size)
 {
     try
     {
-        m_first = new queueNode<T>(q.m_first);
+        m_first = new Node(q.m_first);
         if (q.size() == 1)
         {
             m_last = m_first;
             return;
         }
 
-        queueNode<T> *current = m_first;
-        queueNode<T> *q_current = q.m_first;
+        Node *current = m_first;
+        Node *q_current = q.m_first;
         while (q_current->next)
         {
-            current->next = new queueNode<T>(q_current->next);
+            current->next = new Node(q_current->next);
 
             current = current->next;
             q_current = q_current->next;
@@ -159,14 +196,14 @@ void Queue<T>::pushBack(const T &x)
 {
     if (m_size == 0)
     {
-        m_first = new queueNode<T>(x);
+        m_first = new Node(x);
         m_last = m_first;
         m_size++;
 
         return;
     }
 
-    m_last->next = new queueNode<T>(x);
+    m_last->next = new Node(x);
     m_last = m_last->next;
     m_size++;
 }
@@ -200,7 +237,7 @@ void Queue<T>::popFront()
         return;
     }
 
-    queueNode<T> *second = m_first->next;
+    Node *second = m_first->next;
     delete m_first;
 
     m_first = second;
@@ -240,7 +277,7 @@ int Queue<T>::size() const
 /* ---------- Iterator Implementation ---------- */
 
 template<class T>
-Queue<T>::Iterator::Iterator(queueNode<T>* const& node) :
+Queue<T>::Iterator::Iterator(Node* const& node) :
     m_current(node)
 {}
 
@@ -274,7 +311,7 @@ bool Queue<T>::Iterator::operator!=(const Iterator& other)
 /* ---------- ConstIterator Implementation ---------- */
 
 template<class T>
-Queue<T>::ConstIterator::ConstIterator(queueNode<T>* const& node) :
+Queue<T>::ConstIterator::ConstIterator(Node* const& node) :
     m_current(node)
 {}
 
