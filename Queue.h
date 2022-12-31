@@ -129,17 +129,17 @@ template <class T>
 Queue<T>::Node::Node(const T &x)
 {
     data = x;
-    next = NULL;
+    next = nullptr;
 }
 
 template <class T>
-Queue<T>::Node::Node(const Node &n) : next(NULL)
+Queue<T>::Node::Node(const Node &n) : next(nullptr)
 {
     data = n.data;
 }
 
 template <class T>
-Queue<T>::Node::Node(const Node *n) : next(NULL)
+Queue<T>::Node::Node(const Node *n) : next(nullptr)
 {
     data = n->data;
 }
@@ -147,13 +147,13 @@ Queue<T>::Node::Node(const Node *n) : next(NULL)
 /* ---------- Queue Implementation ---------- */
 
 template<class T>
-Queue<T>::Queue() : m_first(NULL), m_last(NULL), m_size(0) {}
+Queue<T>::Queue() : m_first(nullptr), m_last(nullptr), m_size(0) {}
 
 template<class T>
 Queue<T>::~Queue()
 {
     Node *n = m_first;
-    while (n != NULL)
+    while (n != nullptr)
     {
         Node *tmp = n;
         n = n->next;
@@ -162,7 +162,7 @@ Queue<T>::~Queue()
 }
 
 template<class T>
-Queue<T>::Queue(const Queue &q): m_first(NULL), m_last(NULL), m_size(q.m_size)
+Queue<T>::Queue(const Queue &q): m_first(nullptr), m_last(nullptr), m_size(q.m_size)
 {
     try
     {
@@ -229,8 +229,8 @@ void Queue<T>::popFront()
     if (m_size == 1)
     {
         delete m_first;
-        m_first = NULL;
-        m_last = NULL;
+        m_first = nullptr;
+        m_last = nullptr;
         m_size--;
 
         return;
