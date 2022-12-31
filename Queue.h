@@ -22,7 +22,7 @@ public:
     Queue();
     ~Queue();
     Queue(const Queue &q);
-    Queue& operator=(Queue const& other) = default;
+    Queue& operator=(const Queue& other);
 
     void pushBack(const T &x);
     T &front() const;
@@ -188,6 +188,30 @@ Queue<T>::Queue(const Queue &q): m_first(nullptr), m_last(nullptr), m_size(q.m_s
     {
         delete this;
     }
+}
+
+template<class T>
+Queue<T>& Queue<T>::operator=(const Queue<T>& other)
+{
+    if (this != &other)
+    {
+        Node *n = this->m_first;
+        while (n != nullptr)
+        {
+            Node *tmp = n;
+            n = n->next;
+            delete tmp;
+        }
+        this->m_first = nullptr;
+        this->m_last = nullptr;
+
+        for (T i : other)
+        {
+            this->pushBack(i);
+        }
+    }
+
+    return *this;
 }
 
 template<class T>
