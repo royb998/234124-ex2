@@ -147,8 +147,7 @@ Queue<T>::Node::Node(const Node *n) : next(NULL)
 /* ---------- Queue Implementation ---------- */
 
 template<class T>
-Queue<T>::Queue():m_size(0), m_first(NULL), m_last(NULL)
-{}
+Queue<T>::Queue() : m_first(NULL), m_last(NULL), m_size(0) {}
 
 template<class T>
 Queue<T>::~Queue()
@@ -163,7 +162,7 @@ Queue<T>::~Queue()
 }
 
 template<class T>
-Queue<T>::Queue(const Queue &q):m_first(NULL), m_last(NULL), m_size(q.m_size)
+Queue<T>::Queue(const Queue &q): m_first(NULL), m_last(NULL), m_size(q.m_size)
 {
     try
     {
