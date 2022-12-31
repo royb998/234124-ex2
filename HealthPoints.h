@@ -36,6 +36,19 @@ public:
     bool operator>=(HealthPoints other) const;
     bool operator<=(HealthPoints other) const;
 
+    bool operator==(int other) const;
+    bool operator!=(int other) const;
+    bool operator>(int other) const;
+    bool operator<(int other) const;
+    bool operator>=(int other) const;
+    bool operator<=(int other) const;
+    friend bool operator==(int value, const HealthPoints& hp);
+    friend bool operator!=(int value, const HealthPoints& hp);
+    friend bool operator>(int value, const HealthPoints& hp);
+    friend bool operator<(int value, const HealthPoints& hp);
+    friend bool operator>=(int value, const HealthPoints& hp);
+    friend bool operator<=(int value, const HealthPoints& hp);
+
     friend std::ostream& operator<<(std::ostream& os, const HealthPoints& hp);
 
     /* Exceptions */

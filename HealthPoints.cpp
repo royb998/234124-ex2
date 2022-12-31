@@ -48,22 +48,21 @@ HealthPoints HealthPoints::operator+(int value) const
                         this->m_currentHP + value);
 }
 
-HealthPoints operator+(int value, const HealthPoints& hp)
-{
-    return HealthPoints(hp.m_maxHP,
-                        hp.m_currentHP + value);
-}
-
 HealthPoints HealthPoints::operator-(int value) const
 {
     return HealthPoints(this->m_maxHP,
                         this->m_currentHP - value);
 }
 
+HealthPoints operator+(int value, const HealthPoints& hp)
+{
+    return hp + value;
+}
+
 HealthPoints operator-(int value, const HealthPoints& hp)
 {
     return HealthPoints(hp.m_maxHP,
-                        hp.m_currentHP - value);
+                        value - hp.m_currentHP);
 }
 
 void HealthPoints::operator+=(int value)
@@ -106,6 +105,66 @@ bool HealthPoints::operator>=(HealthPoints other) const
 bool HealthPoints::operator<=(HealthPoints other) const
 {
     return this->m_currentHP <= other.m_currentHP;
+}
+
+bool HealthPoints::operator==(int value) const
+{
+    return this->m_currentHP == value;
+}
+
+bool HealthPoints::operator!=(int value) const
+{
+    return this->m_currentHP != value;
+}
+
+bool HealthPoints::operator>(int value) const
+{
+    return this->m_currentHP > value;
+}
+
+bool HealthPoints::operator<(int value) const
+{
+    return this->m_currentHP < value;
+}
+
+bool HealthPoints::operator>=(int value) const
+{
+    return this->m_currentHP >= value;
+}
+
+bool HealthPoints::operator<=(int value) const
+{
+    return this->m_currentHP <= value;
+}
+
+bool operator==(int value, const HealthPoints& hp)
+{
+    return hp == value;
+}
+
+bool operator!=(int value, const HealthPoints& hp)
+{
+    return hp != value;
+}
+
+bool operator>(int value, const HealthPoints& hp)
+{
+    return hp < value;
+}
+
+bool operator<(int value, const HealthPoints& hp)
+{
+    return hp > value;
+}
+
+bool operator>=(int value, const HealthPoints& hp)
+{
+    return hp <= value;
+}
+
+bool operator<=(int value, const HealthPoints& hp)
+{
+    return hp >= value;
 }
 
 /* IO operators */
