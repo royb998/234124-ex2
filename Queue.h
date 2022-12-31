@@ -187,6 +187,7 @@ Queue<T>::Queue(const Queue &q): m_first(nullptr), m_last(nullptr), m_size(q.m_s
     } catch (...)
     {
         delete this;
+        throw;
     }
 }
 
@@ -204,6 +205,7 @@ Queue<T>& Queue<T>::operator=(const Queue<T>& other)
         }
         this->m_first = nullptr;
         this->m_last = nullptr;
+        this->m_size = 0;
 
         for (T i : other)
         {
