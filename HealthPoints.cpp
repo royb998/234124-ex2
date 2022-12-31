@@ -42,7 +42,7 @@ void HealthPoints::setHP(int value)
 
 /* Arithmetic operators */
 
-HealthPoints HealthPoints::operator+(int value)
+HealthPoints HealthPoints::operator+(int value) const
 {
     return HealthPoints(this->m_maxHP,
                         this->m_currentHP + value);
@@ -54,7 +54,7 @@ HealthPoints operator+(int value, const HealthPoints& hp)
                         hp.m_currentHP + value);
 }
 
-HealthPoints HealthPoints::operator-(int value)
+HealthPoints HealthPoints::operator-(int value) const
 {
     return HealthPoints(this->m_maxHP,
                         this->m_currentHP - value);
@@ -78,32 +78,32 @@ void HealthPoints::operator-=(int value)
 
 /* Comparison operators */
 
-bool HealthPoints::operator==(HealthPoints other)
+bool HealthPoints::operator==(HealthPoints other) const
 {
     return this->m_currentHP == other.m_currentHP;
 }
 
-bool HealthPoints::operator!=(HealthPoints other)
+bool HealthPoints::operator!=(HealthPoints other) const
 {
     return this->m_currentHP != other.m_currentHP;
 }
 
-bool HealthPoints::operator>(HealthPoints other)
+bool HealthPoints::operator>(HealthPoints other) const
 {
     return this->m_currentHP > other.m_currentHP;
 }
 
-bool HealthPoints::operator<(HealthPoints other)
+bool HealthPoints::operator<(HealthPoints other) const
 {
     return this->m_currentHP < other.m_currentHP;
 }
 
-bool HealthPoints::operator>=(HealthPoints other)
+bool HealthPoints::operator>=(HealthPoints other) const
 {
     return this->m_currentHP >= other.m_currentHP;
 }
 
-bool HealthPoints::operator<=(HealthPoints other)
+bool HealthPoints::operator<=(HealthPoints other) const
 {
     return this->m_currentHP <= other.m_currentHP;
 }

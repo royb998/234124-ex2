@@ -22,19 +22,19 @@ private:
 public:
     HealthPoints(int maxHp=DEFAULT_MAX_HP);
 
-    HealthPoints operator+(int value);
-    HealthPoints operator-(int value);
+    HealthPoints operator+(int value) const;
+    HealthPoints operator-(int value) const;
     friend HealthPoints operator+(int value, const HealthPoints& hp);
     friend HealthPoints operator-(int value, const HealthPoints& hp);
     void operator+=(int value);
     void operator-=(int value);
 
-    bool operator==(HealthPoints other);
-    bool operator!=(HealthPoints other);
-    bool operator>(HealthPoints other);
-    bool operator<(HealthPoints other);
-    bool operator>=(HealthPoints other);
-    bool operator<=(HealthPoints other);
+    bool operator==(HealthPoints other) const;
+    bool operator!=(HealthPoints other) const;
+    bool operator>(HealthPoints other) const;
+    bool operator<(HealthPoints other) const;
+    bool operator>=(HealthPoints other) const;
+    bool operator<=(HealthPoints other) const;
 
     friend std::ostream& operator<<(std::ostream& os, const HealthPoints& hp);
 
