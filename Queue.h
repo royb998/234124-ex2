@@ -98,8 +98,8 @@ public:
 
 /* ---------- Functions ---------- */
 
-template<class T>
-Queue<T> filter(Queue<T> queue, bool (* predicate)(T))
+template<class T, class Predicate>
+Queue<T> filter(Queue<T> queue, Predicate predicate)
 {
     Queue<T> filtered;
 
@@ -114,8 +114,8 @@ Queue<T> filter(Queue<T> queue, bool (* predicate)(T))
     return filtered;
 }
 
-template <class T>
-void transform(Queue<T>& queue, void (* map)(T&))
+template <class T, class Map>
+void transform(Queue<T>& queue, Map map)
 {
     for (T& i : queue)
     {
