@@ -14,6 +14,8 @@ class Queue
     Node *m_last;
     int m_size;
 
+    void emptyQueue();
+
 public:
     class EmptyQueue
     {
@@ -126,6 +128,19 @@ void transform(Queue<T>& queue, Map map)
 /* ---------- Node Implementation ---------- */
 
 template <class T>
+void Queue<T>::emptyQueue()
+{
+    Node *n = m_first;
+    while (n != nullptr)
+    {
+        Node *tmp = n;
+        n = n->next;
+        delete tmp;
+        this->m_size--;
+    }
+}
+
+template <class T>
 Queue<T>::Node::Node(const T &x)
 {
     data = x;
@@ -152,13 +167,7 @@ Queue<T>::Queue() : m_first(nullptr), m_last(nullptr), m_size(0) {}
 template<class T>
 Queue<T>::~Queue()
 {
-    Node *n = m_first;
-    while (n != nullptr)
-    {
-        Node *tmp = n;
-        n = n->next;
-        delete tmp;
-    }
+    this->emptyQueue();
 }
 
 template<class T>
@@ -186,7 +195,7 @@ Queue<T>::Queue(const Queue &q): m_first(nullptr), m_last(nullptr), m_size(q.m_s
         m_last = current;
     } catch (...)
     {
-        delete this;
+        this->emptyQueue();
         throw;
     }
 }
@@ -194,24 +203,30 @@ Queue<T>::Queue(const Queue &q): m_first(nullptr), m_last(nullptr), m_size(q.m_s
 template<class T>
 Queue<T>& Queue<T>::operator=(const Queue<T>& other)
 {
-    if (this != &other)
+    if (this == &other)
     {
-        Node *n = this->m_first;
-        while (n != nullptr)
-        {
-            Node *tmp = n;
-            n = n->next;
-            delete tmp;
-        }
-        this->m_first = nullptr;
-        this->m_last = nullptr;
-        this->m_size = 0;
-
-        for (T i : other)
-        {
-            this->pushBack(i);
-        }
+        return *this;
     }
+
+    /* Put new values in a new queue. */
+    Queue<T> newQueue;
+
+    try {
+        for (T i: other) {
+            newQueue.pushBack(i);
+        }
+    } catch(...) {
+        /* If failed to fill new queue, leave current queue unchanged. */
+        throw;
+    }
+
+    /* Transfer newQueue content to current one. */
+    this->emptyQueue();
+    this->m_first = newQueue.m_first;
+    newQueue.m_first = nullptr;
+    this->m_last = newQueue.m_last;
+    newQueue.m_last = nullptr;
+    this->m_size = newQueue.m_size;
 
     return *this;
 }
